@@ -28,6 +28,7 @@
 		95520591166E21ED00AA7059 /* market-1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "market-1"; sourceTree = BUILT_PRODUCTS_DIR; };
 		95520595166E21ED00AA7059 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		95520597166E21ED00AA7059 /* market_1.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = market_1.1; sourceTree = "<group>"; };
+		9552059E166E222B00AA7059 /* market.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = market.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				95520595166E21ED00AA7059 /* main.cpp */,
+				9552059E166E222B00AA7059 /* market.h */,
 				95520597166E21ED00AA7059 /* market_1.1 */,
 			);
 			path = "market-1";
@@ -210,6 +212,7 @@
 				9552059D166E21ED00AA7059 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

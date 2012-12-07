@@ -98,9 +98,9 @@ public:
         int t;
         cout<<"Select a job you wanna do:"<<endl;
         cout<<"1.Show the SuperMarket info."<<endl;
-        cout<<"2.Add some drinks."<<endl;
-        cout<<"3.Add some foods."<<endl;
-        cout<<"4.Add some electricities."<<endl;
+//        cout<<"2.Add some drinks."<<endl;
+//        cout<<"3.Add some foods."<<endl;
+//        cout<<"4.Add some electricities."<<endl;
         cout<<"0.Logout."<<endl;
         cin>>t;
         return t;
@@ -192,7 +192,7 @@ public:
             cout<<"Not enough foods."<<endl;
             return 1;
         }
-        else if (c * get_price() > (*customer_now).get_fund()){
+        else if (c * get_price() > customer_now->get_fund()){
             cout<<"No Enough Money!"<<endl;
             return 2;
         }
@@ -201,8 +201,9 @@ public:
             //修改流水资金，增加log文件中的条目，修改总收入，总卖出的件数
             G_market.change_fund(c*get_price());
             G_market.change_income((get_price() - get_chengben())*c);
+            customer_now->change_fund(0-c*get_price());
             soldout(c);
-            cout<<"Successful bought "<<c<<"foods."<<endl;
+            cout<<"Successful bought "<<c<<" foods."<<endl;
         }
         return 0;
     };
@@ -232,7 +233,7 @@ public:
             cout<<"Not enough electricities."<<endl;
             return 1;
         }
-        else if (c * get_price() > (*customer_now).get_fund()){
+        else if (c * get_price() > customer_now->get_fund()){
             cout<<"No Enough Money!"<<endl;
             return 2;
         }
@@ -241,8 +242,9 @@ public:
             //修改流水资金，增加log文件中的条目，修改总收入，总卖出的件数
             G_market.change_fund(c*get_price());
             G_market.change_income((get_price() - get_chengben())*c);
+            customer_now->change_fund(0-c*get_price());
             soldout(c);
-            cout<<"Successful bought "<<c<<"electricities."<<endl;
+            cout<<"Successful bought "<<c<<" electricities."<<endl;
         }
         return 0;
     };

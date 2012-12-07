@@ -83,7 +83,7 @@ int main(int argc, const char * argv[])
 login:
     cout<<"Input your userid(Input -1 to exit):";
     cin>>uid;
-    if (uid==-1) {
+    if (uid<0) {
         return 0;
     }
     cout<<"Input your password:";
@@ -106,7 +106,8 @@ login:
         goto login;
     }
     else if(!check_cus_login(uid, pwd)){
-        while (int choice=customer_now->list()!=0) {
+        int choice=customer_now->list();
+        while (choice!=0) {
             switch (choice) {
                 case 1:
                     int t;
@@ -115,11 +116,23 @@ login:
                     G_drink.cost(t);
                     customer_now->showinfo();
                     break;
-                    
+                case 2:
+                    cout<<"How many do you wanna buy?"<<endl;
+                    cin>>t;
+                    G_food.cost(t);
+                    customer_now->showinfo();
+                    break;
+                case 3:
+                    cout<<"How many do you wanna buy?"<<endl;
+                    cin>>t;
+                    G_electricity.cost(t);
+                    customer_now->showinfo();
+                    break;
                 default:
                     cout<<"Please input a correct choice."<<endl;
                     break;
             }
+            choice=customer_now->list();
         }
         goto login;
     }
