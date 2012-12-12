@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "customer::showinfo():market.h">
+      </ContextState>
+      <ContextState
+         contextName = "read$NOCANCEL:(null)">
+         <PersistentStrings>
+            <PersistentString
+               value = "Vcus">
+            </PersistentString>
+            <PersistentString
+               value = "customer_now">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "customer::login():market.h">
+      </ContextState>
+      <ContextState
+         contextName = "main:main.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "drink::cost(unsigned int):market.h">
+         <PersistentStrings>
+            <PersistentString
+               value = "Vcus">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "check_cus_login(int, int, std::__1::vector&lt;customer, std::__1::allocator&lt;customer&gt; &gt;):main.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "t">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

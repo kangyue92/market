@@ -76,6 +76,7 @@ public:
         cout<<endl<<"Your user_id is "<<get_uid()<<endl;
         cout<<"Fund in your account "<<get_fund()<<endl<<endl;
     }
+    int charge();
 };
 customer * customer_now=NULL;
 vector<customer> Vcus;
@@ -90,17 +91,19 @@ public:
         password=pwd;
         type=_MNG;
     }
+    void checkgoods();
     int login(){
-        cout<<"Manager Login Successfully!"<<endl;
+        cout<<"Manager Login Successfully!"<<endl<<endl;
+        checkgoods();
         return 0;
     };
     int list(){
         int t;
         cout<<"Select a job you wanna do:"<<endl;
         cout<<"1.Show the SuperMarket info."<<endl;
-//        cout<<"2.Add some drinks."<<endl;
-//        cout<<"3.Add some foods."<<endl;
-//        cout<<"4.Add some electricities."<<endl;
+        cout<<"2.Add some drinks."<<endl;
+        cout<<"3.Add some foods."<<endl;
+        cout<<"4.Add some electricities."<<endl;
         cout<<"0.Logout."<<endl;
         cin>>t;
         return t;
@@ -157,7 +160,7 @@ public:
         }
         else {
             change_number(0-c);
-            //修改流水资金，增加log文件中的条目，修改总收入，总卖出的件数
+            //增加log文件中的条目
             G_market.change_fund(c*get_price());
             G_market.change_income((get_price() - get_chengben())*c);
             customer_now->change_fund(0-c*get_price());
@@ -285,7 +288,48 @@ int customer::list(){
     cout<<"1.Buy drinks."<<endl;
     cout<<"2.Buy foods."<<endl;
     cout<<"3.Buy electricities."<<endl;
+    cout<<"4.Charge."<<endl;
     cout<<"0.Logout."<<endl;
     cin>>t;
     return t;
+}
+
+void manager::checkgoods(){
+    if (G_drink.get_number()<10) {
+        cout<<"There are just "<<G_drink.get_number()<<" drinks left.Please reload!"<<endl;
+    }
+    if (G_food.get_number()<10){
+        cout<<"There are just "<<G_food.get_number()<<" foods left.Please reload!"<<endl;
+    }
+    if (G_electricity.get_number()<10){
+        cout<<"There are just "<<G_electricity.get_number()<<" electricities left.Please reload!"<<endl;
+    }
+    return;
+}
+
+int customer::charge(){
+    cout<<"Input your charging password:";
+    unsigned int pwd;
+    cin>>pwd;
+    int temp;
+    if (pwd/1000000==0) {
+        int a=pwd/100000;temp=pwd%100000;
+        int b=temp/10000;temp=temp%10000;
+        int c=temp/1000;temp=temp%1000;
+        int d=temp/100;temp=temp%100;
+        int e=temp/10;temp=temp%10;
+        if (a==temp&&b==e&&c==d) {
+            temp=a*100+b*10+c;
+            if (temp<=500&&temp>0) {
+                cout<<"Successfully charged "<<temp<<" in your account.Now there are "<<change_fund(temp)<<" in your account."<<endl<<endl;
+            }
+            else
+                cout<<"Failed!!Cannot charge >500 each time."<<endl;
+        }
+        else
+            cout<<"Failed!!Invailid charging password."<<endl;
+    }
+    else
+        cout<<"Failed!!Invailid charging password."<<endl;
+    return 0;
 }

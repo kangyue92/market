@@ -91,16 +91,33 @@ login:
     
     if (uid==cage.get_uid()&&pwd==cage.get_password()) {
         cage.login();
-        while (int choice=cage.list()!=0) {
+        int choice=cage.list();
+        while (choice!=0) {
+            unsigned int c;
             switch (choice) {
                 case 1:
                     cage.show();
                     break;
-                
+                case 2:
+                    cout<<"How many drinks do you wanna add:";
+                    cin>>c;
+                    G_drink.load(c);
+                    break;
+                case 3:
+                    cout<<"How many foods do you wanna add:";
+                    cin>>c;
+                    G_food.load(c);
+                    break;
+                case 4:
+                    cout<<"How many electricities do you wanna add:";
+                    cin>>c;
+                    G_electricity.load(c);
+                    break;
                 default:
                     cout<<"Please input a correct choice."<<endl;
                     break;
             }
+            choice=cage.list();
         }
         customer_now=NULL;
         goto login;
@@ -128,6 +145,9 @@ login:
                     G_electricity.cost(t);
                     customer_now->showinfo();
                     break;
+                case 4:
+                    customer_now->charge();
+                    break;
                 default:
                     cout<<"Please input a correct choice."<<endl;
                     break;
@@ -137,7 +157,7 @@ login:
         goto login;
     }
     else{
-        cout<<"No such user!!"<<endl;
+        cout<<"Wrong user id or password!!"<<endl;
         goto login;
     }
     
