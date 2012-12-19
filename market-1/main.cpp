@@ -61,14 +61,6 @@ void init_electricity(int number,int ts,float price,float cb){
     G_electricity.set_chengben(cb);
 };
 
-//void writeback_cusinfo(){
-//    foreach(customer, t, vector<customer>, Vcus){
-//        if (t.get_uid()==(*customer_now).get_uid()) {
-//            t.set_fund((*customer_now).get_fund());
-//            return;
-//        }
-//    }
-//};
 
 int init_files(){  //打开log文件和data数据文件，以准备init所有用户的信息以及记录所有操作
     try {
@@ -77,12 +69,7 @@ int init_files(){  //打开log文件和data数据文件，以准备init所有用
         cout<<"Error! "<<e.what()<<endl;
         return 1;
     }
-//    try {
-//        outfs.open("data.dat",ios::binary|ios::ate);
-//    } catch (exception &e) {
-//        cout<<"Error! "<<e.what()<<endl;
-//        return 1;
-//    }
+
     try {
         logfs.open("log.txt",ios::binary|ios::app);
     } catch (exception &e) {
@@ -139,7 +126,7 @@ int init_from_file(){
         fa=stof(temp);
         Vcus.push_back(customer(ia, ib, fa));
     }
-    
+    logfs<<get_now_time()<<"Successfully init all informations!!!!"<<endl;
     return 0;
 }
 
@@ -148,6 +135,7 @@ int save_state(){
         outfs.open("data.txt",ios::binary|ios::trunc);
     } catch (exception &e) {
         cout<<"Error! "<<e.what()<<endl;
+        logfs<<get_now_time()<<"Open out file error. "<<e.what()<<endl;
         return 1;
     }
     outfs<<G_market.get_fund()<<endl;
@@ -170,6 +158,7 @@ int save_state(){
         outfs<<Vcus[i].get_password()<<endl;
         outfs<<Vcus[i].get_fund()<<endl;
     }
+    logfs<<get_now_time()<<"Successfully saved state to data file!!!!!"<<endl;
     return 0;
 }
 int main(int argc, const char * argv[])
@@ -224,6 +213,7 @@ login:
             }
             choice=cage.list();
         }
+        logfs<<get_now_time()<<"Manager logout."<<endl;
         customer_now=NULL;
         goto login;
     }
@@ -259,10 +249,13 @@ login:
             }
             choice=customer_now->list();
         }
+        logfs<<get_now_time()<<"Customer "<<customer_now->get_uid()<<" logout."<<endl;
+        customer_now=NULL;
         goto login;
     }
     else{
         cout<<"Wrong user id or password!!"<<endl;
+        logfs<<get_now_time()<<"Login failed uid:"<<uid<<" password:"<<pwd<<endl;
         goto login;
     }
     

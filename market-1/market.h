@@ -14,8 +14,17 @@
 #define _MNG 0
 #define _CMR 1
 #include <fstream>
+#include <time.h>
 
 using namespace std;
+
+string get_now_time(){
+    time_t now;
+    now=time(NULL);
+    char time_now[64];
+    strftime(time_now, sizeof(time_now), "%Y/%m/%d %X\t", localtime(&now));
+    return time_now;
+}
 
 ifstream infs;
 ofstream outfs;
@@ -52,7 +61,6 @@ public:
     user(){};
     int login();
     int list();
-    //int logtofile();
     int get_uid(){return user_id;};
     int get_password(){return password;};
     void set_uid(int uid){this->user_id=uid;};
@@ -71,6 +79,7 @@ public:
     }
     int login(){
         cout<<this->user_id<<" Login Successfully!"<<endl;
+        logfs<<get_now_time()<<"Customer "<<this->user_id<<" Login Successfully!"<<endl;
         showinfo();
         return 0;
     };
@@ -100,6 +109,7 @@ public:
     void checkgoods();
     int login(){
         cout<<"Manager Login Successfully!"<<endl<<endl;
+        logfs<<get_now_time()<<"Manager Login Successfully!"<<endl;
         checkgoods();
         return 0;
     };
@@ -166,18 +176,19 @@ public:
         }
         else {
             change_number(0-c);
-            //增加log文件中的条目
             G_market.change_fund(c*get_price());
             G_market.change_income((get_price() - get_chengben())*c);
             customer_now->change_fund(0-c*get_price());
             soldout(c);
             cout<<"Successful bought "<<c<<" drinks."<<endl;
+            logfs<<get_now_time()<<"Customer "<<customer_now->get_uid()<<" bought "<<c<<" drinks."<<endl;
         }
         return 0;
     };
     int load(unsigned int c){
         G_market.change_fund(0-get_chengben()*c);
         cout<<"Successful increase the number of drinks to "<<change_number(c)<<endl;
+        logfs<<get_now_time()<<"Manager loaded "<<c<<" drinks."<<endl;
         //减少流水资金，增加当前数目，增加log文件中的条目。
         return 0;
     };
@@ -213,12 +224,14 @@ public:
             customer_now->change_fund(0-c*get_price());
             soldout(c);
             cout<<"Successful bought "<<c<<" foods."<<endl;
+            logfs<<get_now_time()<<"Customer "<<customer_now->get_uid()<<" bought "<<c<<" foods."<<endl;
         }
         return 0;
     };
     int load(unsigned int c){
         G_market.change_fund(0-get_chengben()*c);
         cout<<"Successful increase the number of foods to "<<change_number(c)<<endl;
+        logfs<<get_now_time()<<"Manager loaded "<<c<<" foods."<<endl;
         //减少流水资金，增加当前数目，增加log文件中的条目。
         return 0;
     };
@@ -254,12 +267,14 @@ public:
             customer_now->change_fund(0-c*get_price());
             soldout(c);
             cout<<"Successful bought "<<c<<" electricities."<<endl;
+            logfs<<get_now_time()<<"Customer "<<customer_now->get_uid()<<" bought "<<c<<" electricities."<<endl;
         }
         return 0;
     };
     int load(unsigned int c){
         G_market.change_fund(0-get_chengben()*c);
         cout<<"Successful increase the number of electricities to "<<change_number(c)<<endl;
+        logfs<<get_now_time()<<"Manager loaded "<<c<<" electricities."<<endl;
         //减少流水资金，增加当前数目，增加log文件中的条目。
         return 0;
     };
@@ -283,6 +298,7 @@ void manager::show(){
     G_food.show();
     G_electricity.show();
     cout<<"==================================="<<endl;
+    logfs<<get_now_time()<<"Manager viewed the market infomations."<<endl;
 }
 
 int customer::list(){
@@ -328,14 +344,22 @@ int customer::charge(){
             temp=a*100+b*10+c;
             if (temp<=500&&temp>0) {
                 cout<<"Successfully charged "<<temp<<" in your account.Now there are "<<change_fund(temp)<<" in your account."<<endl<<endl;
+                logfs<<get_now_time()<<"Customer "<<customer_now->get_uid()<<" charged "<<temp<<" in his account."<<endl;
             }
-            else
+            else{
                 cout<<"Failed!!Cannot charge >500 each time."<<endl;
+                logfs<<get_now_time()<<"Customer "<<customer_now->get_uid()<<" charge failed For >500"<<endl;
+            }
+            
         }
-        else
+        else{
             cout<<"Failed!!Invailid charging password."<<endl;
+            logfs<<get_now_time()<<"Customer "<<customer_now->get_uid()<<" charge failed For Invailid password."<<endl;
+        }
     }
-    else
+    else{
         cout<<"Failed!!Invailid charging password."<<endl;
+        logfs<<get_now_time()<<"Customer "<<customer_now->get_uid()<<" charge failed For Invailid password."<<endl;
+    }
     return 0;
 }
