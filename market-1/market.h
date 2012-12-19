@@ -13,7 +13,13 @@
 //声明两个user的类型，经理的user type为0，顾客的为1
 #define _MNG 0
 #define _CMR 1
+#include <fstream>
+
 using namespace std;
+
+ifstream infs;
+ofstream outfs;
+ofstream logfs;
 
 class market {
 private:
@@ -57,7 +63,7 @@ class customer: public user {
 private:
     float fund;   //顾客当前账户上拥有的钱
 public:
-    customer(int uid,int pwd,int fund){
+    customer(int uid,int pwd,float fund){
         user_id=uid;
         password=pwd;
         this->type=_CMR;
